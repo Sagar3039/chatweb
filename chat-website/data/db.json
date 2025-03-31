@@ -1,0 +1,290 @@
+{
+  "users": [
+    {
+      "id": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "username": "sagar_karmakar",
+      "email": "sagarkarmakar3.10.2004@gmail.com",
+      "password": "$2b$10$CUZ7/iV4wVadiYOYC6NiLetw3V24Yk01c73NDmQ6R0cxmDLJdlO0G"
+    },
+    {
+      "id": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "username": "sagarkarmakar",
+      "email": "sagarkarmakar10.2004@gmail.com",
+      "password": "$2b$10$fAn86sx844NwFbMNFezhQOqfzeXnu5PkxUwYO2zkz1AKEDrVfpoca"
+    },
+    {
+      "id": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "username": "sudhu sagar",
+      "email": "dirgakarmakar@gmail.com",
+      "password": "$2b$10$xNPCcUVe2p/L/MnSRih.TugPbpy8tGz/zHhiOyEz9stddMGHIf0UW"
+    }
+  ],
+  "messages": [
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "hello",
+      "timestamp": "2025-03-31T10:46:55.344Z",
+      "id": "5ce8f9d6-ee7e-43a4-acd3-802c0a267f86",
+      "seen": true
+    },
+    {
+      "from": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "I AM 3.",
+      "timestamp": "2025-03-31T10:47:33.066Z",
+      "id": "407d25e7-3869-4405-a5e5-126112362785",
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "I AM 10.",
+      "timestamp": "2025-03-31T10:47:40.730Z",
+      "id": "7cb37576-e23c-4a19-a892-bb08f6192296",
+      "seen": true
+    },
+    {
+      "from": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "hi I am no.3",
+      "timestamp": "2025-03-31T10:51:25.811Z",
+      "id": "71e8a867-da61-4654-9236-1b33009aec9a",
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "hi i am no.2",
+      "timestamp": "2025-03-31T10:51:47.880Z",
+      "id": "f2ddac8d-b13d-4afa-9776-3afca1ed5c0d",
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "/uploads/1743418480283-Screenshot 2025-03-01 233431.png",
+      "type": "media",
+      "filename": "1743418480283-Screenshot 2025-03-01 233431.png",
+      "timestamp": "2025-03-31T10:54:40.298Z",
+      "id": "70627b36-8dfe-4847-b3be-a1e400270e6e",
+      "seen": true
+    },
+    {
+      "from": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "/uploads/1743418498442-istockphoto-492529287-612x612.jpg",
+      "type": "media",
+      "filename": "1743418498442-istockphoto-492529287-612x612.jpg",
+      "timestamp": "2025-03-31T10:54:58.445Z",
+      "id": "264dbad1-c010-4e15-b709-fec867e3c4e5",
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "/uploads/1743418713581-1. Welcome to series on GO programming language.mp4",
+      "type": "media",
+      "filename": "1743418713581-1. Welcome to series on GO programming language.mp4",
+      "timestamp": "2025-03-31T10:58:33.985Z",
+      "id": "15181b98-6039-4e66-8e2f-acfb869286d6",
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "/uploads/1743418721731-WhatsApp Video 2025-03-31 at 14.08.30_d647dd12.mp4",
+      "type": "media",
+      "filename": "1743418721731-WhatsApp Video 2025-03-31 at 14.08.30_d647dd12.mp4",
+      "timestamp": "2025-03-31T10:58:41.746Z",
+      "id": "8baa6c3f-9100-46a9-b4b6-507bd80f799d",
+      "seen": true
+    },
+    {
+      "from": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "hii",
+      "timestamp": "2025-03-31T11:03:22.567Z",
+      "id": "49da7f20-f912-4755-ac57-fb569edce699",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "k",
+      "timestamp": "2025-03-31T11:04:44.387Z",
+      "id": "34e57340-4b84-4479-ab1d-39380e990f81",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "hii",
+      "timestamp": "2025-03-31T11:07:11.114Z",
+      "id": "92292b30-95fe-43ea-b39a-3a892064ff13",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "vbvbvb",
+      "timestamp": "2025-03-31T11:07:31.411Z",
+      "id": "00133dce-11a0-49f1-9581-8c8df2f90b23",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "dsfsdfdf",
+      "timestamp": "2025-03-31T11:09:58.483Z",
+      "id": "edf4e128-df2d-4053-8504-224e55869eff",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "nnn",
+      "timestamp": "2025-03-31T11:10:19.029Z",
+      "id": "825820ad-b912-474d-aa8b-67381f9af6e0",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "dfgd",
+      "timestamp": "2025-03-31T11:10:33.116Z",
+      "id": "52cbefa0-8a37-4682-95b6-2d0e1f67274d",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "dfdfgdfgdfgdfdgdgdffgdf",
+      "timestamp": "2025-03-31T11:11:36.491Z",
+      "id": "23e5d498-8c86-49dc-af16-11b1a6cdf0ba",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "/uploads/1743419517653-Golang installation and hello world.mp4",
+      "type": "media",
+      "filename": "1743419517653-Golang installation and hello world.mp4",
+      "timestamp": "2025-03-31T11:11:58.526Z",
+      "id": "b89bef2c-b542-4b7a-8d55-a9e66d46c1e4",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "yoo",
+      "timestamp": "2025-03-31T11:24:19.888Z",
+      "id": "3dc3a858-db01-465a-92f1-b3859fbc0d5b",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "hm",
+      "timestamp": "2025-03-31T11:24:35.518Z",
+      "id": "766cfa7a-35c8-4e96-ac2f-3bda9f94c31d",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "dfg",
+      "timestamp": "2025-03-31T11:26:34.129Z",
+      "id": "820dcef6-f071-404e-aa6e-6611189eecb1",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "fhcffc",
+      "timestamp": "2025-03-31T11:28:03.602Z",
+      "id": "c9f06910-ed37-4e40-8220-d9cb1cc5f8e1",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "content": "dfgd",
+      "timestamp": "2025-03-31T11:38:31.891Z",
+      "id": "37dd1418-597a-42bb-8551-3312452c3478",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "1526112e-1ee4-42b8-9b20-0fb74f414f6c",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "fgf",
+      "timestamp": "2025-03-31T11:46:05.019Z",
+      "id": "6accbed4-feb7-4915-9a42-c6d12de5f04a",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "/uploads/1743421854471-WhatsApp Video 2025-03-31 at 14.08.30_d647dd12.mp4",
+      "type": "media",
+      "filename": "1743421854471-WhatsApp Video 2025-03-31 at 14.08.30_d647dd12.mp4",
+      "timestamp": "2025-03-31T11:50:54.480Z",
+      "id": "fa2b8fdc-a63f-4bc6-9259-e073e56bdeed",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "jhds",
+      "timestamp": "2025-03-31T12:02:38.814Z",
+      "id": "daa646ec-ead9-4c75-8f88-0907badb5ce0",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "hi ami Safgar",
+      "timestamp": "2025-03-31T12:28:28.890Z",
+      "id": "9f3362ec-9f51-44ba-bfb6-602f72d78a15",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "to": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "content": "/uploads/1743424130309-istockphoto-492529287-612x612.jpg",
+      "type": "media",
+      "filename": "1743424130309-istockphoto-492529287-612x612.jpg",
+      "timestamp": "2025-03-31T12:28:50.312Z",
+      "id": "8e22e0ec-7d14-4108-8aef-fd68779e6a1b",
+      "delivered": false,
+      "seen": true
+    },
+    {
+      "from": "e190c0a9-3b6f-4d26-8c89-2ada05b4db20",
+      "to": "1a056ad9-c2c0-4c93-8ce2-058f3a1821ac",
+      "content": "gg",
+      "timestamp": "2025-03-31T12:29:05.043Z",
+      "id": "30b7efee-f5ce-4d1c-b328-7cc696df60c0",
+      "delivered": false,
+      "seen": true
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "users": [
+    {
+      "id": "1743412386403",
+      "username": "sagar_karmakar",
+      "email": "sagarkarmakar3.10.2004@gmail.com",
+      "password": "$2b$10$phILizv51Srk.KXcTBqH6u2dpQt.8YHtiB8JjATZyviX8z3pjzlde",
+      "createdAt": "2025-03-31T09:13:06.403Z"
+    },
+    {
+      "id": "1743412433845",
+      "username": "sagarkarmakar",
+      "email": "sagarkarmakar10.2004@gmail.com",
+      "password": "$2b$10$kqnWCeNDg/LcAuoZU1fmRuGXXGKts.uL2mg4OqozDMtgDX/Tjnk0a",
+      "createdAt": "2025-03-31T09:13:53.845Z"
+    }
+  ],
+  "messages": [
+    {
+      "from": "undefined",
+      "to": "undefined",
+      "content": "hi I am small",
+      "timestamp": "2025-03-31T09:14:26.271Z"
+    },
+    {
+      "from": "undefined",
+      "to": "undefined",
+      "content": "i am big",
+      "timestamp": "2025-03-31T09:14:48.983Z"
+    },
+    {
+      "from": "undefined",
+      "to": "undefined",
+      "content": "hello from 2",
+      "timestamp": "2025-03-31T09:18:07.735Z"
+    },
+    {
+      "from": "undefined",
+      "to": "undefined",
+      "content": "hello from 1\\",
+      "timestamp": "2025-03-31T09:18:14.425Z"
+    },
+    {
+      "from": "undefined",
+      "to": "undefined",
+      "content": "😑😑😑😑",
+      "timestamp": "2025-03-31T09:26:34.054Z"
+    },
+    {
+      "from": "undefined",
+      "to": "undefined",
+      "content": "hello",
+      "timestamp": "2025-03-31T09:51:14.746Z"
+    },
+    {
+      "from": "undefined",
+      "to": "undefined",
+      "content": "hii",
+      "timestamp": "2025-03-31T09:51:31.506Z"
+    },
+    {
+      "from": "1743412386403",
+      "to": "undefined",
+      "content": "HELLO",
+      "timestamp": "2025-03-31T10:24:35.552Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "undefined",
+      "content": "yoo",
+      "timestamp": "2025-03-31T10:25:01.507Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "undefined",
+      "content": "sdfsd",
+      "timestamp": "2025-03-31T10:25:11.631Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "undefined",
+      "content": "ggg",
+      "timestamp": "2025-03-31T10:25:27.963Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "hii",
+      "timestamp": "2025-03-31T10:30:01.204Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "hello",
+      "timestamp": "2025-03-31T10:30:17.859Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "hrllo",
+      "timestamp": "2025-03-31T10:30:24.092Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "erete",
+      "timestamp": "2025-03-31T10:30:44.156Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "kk",
+      "timestamp": "2025-03-31T10:34:13.394Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "oo",
+      "timestamp": "2025-03-31T10:34:22.783Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "sds",
+      "timestamp": "2025-03-31T10:34:34.462Z"
+    },
+    {
+      "from": "1743412386403",
+      "to": "1743412433845",
+      "content": "FF",
+      "timestamp": "2025-03-31T10:34:57.218Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "hello",
+      "timestamp": "2025-03-31T10:35:24.436Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412433845",
+      "content": "hii",
+      "timestamp": "2025-03-31T10:35:42.156Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412433845",
+      "content": "i am 3.",
+      "timestamp": "2025-03-31T10:38:17.858Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "ghjhvvh",
+      "timestamp": "2025-03-31T10:38:29.466Z"
+    },
+    {
+      "from": "1743412386403",
+      "to": "1743412433845",
+      "content": "I AM3.",
+      "timestamp": "2025-03-31T10:39:14.425Z"
+    },
+    {
+      "from": "1743412433845",
+      "to": "1743412386403",
+      "content": "lll",
+      "timestamp": "2025-03-31T10:42:14.503Z"
+    },
+    {
+      "from": "1743412386403",
+      "to": "1743412433845",
+      "content": "fhjhjhj",
+      "timestamp": "2025-03-31T10:42:48.837Z"
+    },
+    {
+      "from": "1743412386403",
+      "to": "1743412433845",
+      "content": "fhtgdfsedfsssssssssssssssss",
+      "timestamp": "2025-03-31T10:43:52.181Z"
+    }
+  ]
+}

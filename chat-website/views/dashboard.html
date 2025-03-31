@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body { background-color: #111b21; color: #e9edef; margin: 0; height: 100vh; }
+        .chat-sidebar { background-color: #202c33; border-right: 1px solid #313d45; }
+        .chat-area { background-color: #0b141a; }
+        .chat-header { background-color: #202c33; border-bottom: 1px solid #313d45; }
+        .chat-input { background-color: #202c33; border-top: 1px solid #313d45; }
+        .message-sent { background-color: #005c4b; }
+        .message-received { background-color: #202c33; }
+        .search-input { background-color: #202c33; border: 1px solid #313d45; }
+        .chat-item:hover { background-color: #2a3942; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #111b21; }
+        ::-webkit-scrollbar-thumb { background: #374045; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="flex h-screen">
+        <!-- Left Sidebar -->
+        <div class="chat-sidebar w-[400px] flex flex-col">
+            <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gray-600 rounded-full"></div>
+                    <span id="usernameDisplay" class="ml-3"></span>
+                </div>
+                <button onclick="logout()" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+            
+            <div class="p-2">
+                <div class="relative mb-4">
+                    <input type="text" id="searchInput" 
+                        class="search-input w-full py-2 px-4 rounded-lg text-gray-200 bg-[#202c33] pl-10" 
+                        placeholder="Search or start new chat">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <div id="searchResults" class="mb-4"></div>
+                <div id="recentChats" class="overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="chat-area flex-1 flex flex-col">
+            <div id="chatHeader" class="chat-header p-4"></div>
+            <div id="messagesList" class="flex-1 overflow-y-auto p-4"></div>
+            <div id="chatInput" class="chat-input p-4">
+                <div class="flex items-center space-x-4">
+                    <button onclick="document.getElementById('fileInput').click()" 
+                        class="text-gray-400 hover:text-gray-200">
+                        <i class="fas fa-paperclip text-xl"></i>
+                    </button>
+                    <input type="file" id="fileInput" class="hidden" multiple 
+                        accept="image/*,video/*,.pdf,.doc,.docx" onchange="handleFileUpload(event)">
+                    <input type="text" id="messageInput" 
+                        class="flex-1 bg-[#2a3942] text-gray-200 px-4 py-3 rounded-lg focus:outline-none" 
+                        placeholder="Type a message">
+                    <button onclick="sendMessage()" class="text-gray-400 hover:text-gray-200">
+                        <i class="fas fa-paper-plane text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keep existing script section -->
+    <script>
+        let currentChatPartner = null;
+        const socket = io();
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('userId');
+            const username = localStorage.getItem('username');
+            
+            if (!userId || !username) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            document.getElementById('usernameDisplay').textContent = username;
+            socket.emit('join', userId);
+            await loadRecentChats();
+        });
+
+        // Update the loadRecentChats function to be async
+        async function loadRecentChats() {
+            try {
+                const userId = localStorage.getItem('userId');
+                const chatsResponse = await fetch(`/api/chats/recent/${userId}`);
+                const recentChats = await chatsResponse.json();
+                
+                const recentChatsContainer = document.getElementById('recentChats');
+                
+                if (recentChats.length === 0) {
+                    recentChatsContainer.innerHTML = `
+                        <div class="text-gray-500 text-center">No recent chats</div>
+                    `;
+                    return;
+                }
+
+                recentChatsContainer.innerHTML = recentChats.map(chat => `
+                    <div class="chat-item flex items-center p-3 cursor-pointer"
+                         onclick="openChat('${chat.partnerId}', '${chat.partnerName}')">
+                        <div class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-gray-300"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-medium text-gray-200">${chat.partnerName}</h4>
+                            <p class="text-sm text-gray-400 truncate">${chat.lastMessage || 'No messages'}</p>
+                        </div>
+                        ${chat.unreadCount ? `
+                            <div class="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs ml-2">
+                                ${chat.unreadCount}
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading chats:', error);
+            }
+        }
+
+        // Add event listeners at the end of the script section
+        document.addEventListener('DOMContentLoaded', () => {
+            // Search input listener
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', debounce(searchUsers, 300));
+            
+            // Message input listener
+            const messageInput = document.getElementById('messageInput');
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Initial load
+            const userId = localStorage.getItem('userId');
+            const username = localStorage.getItem('username');
+            
+            if (!userId || !username) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            document.getElementById('usernameDisplay').textContent = username;
+            socket.emit('join', userId);
+            loadRecentChats();
+        });
+
+        // Update searchUsers function
+        async function searchUsers() {
+            const query = document.getElementById('searchInput').value.trim();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (!query) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/users/search?q=${encodeURIComponent(query)}`);
+                if (!response.ok) throw new Error('Search failed');
+                
+                const users = await response.json();
+                
+                resultsContainer.innerHTML = users.map(user => `
+                    <div class="chat-item flex items-center justify-between p-3 hover:bg-[#2a3942] rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-gray-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-200">${user.username}</h4>
+                                <p class="text-sm text-gray-400">${user.email}</p>
+                            </div>
+                        </div>
+                        <button onclick="openChat('${user.id}', '${user.username}')"
+                            class="px-3 py-1 bg-[#00a884] text-white rounded-md hover:bg-[#008f6f]">
+                            Chat
+                        </button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error searching users:', error);
+                resultsContainer.innerHTML = `
+                    <div class="text-red-400 text-center p-3">Failed to search users</div>
+                `;
+            }
+        }
+
+        // Add these variables at the top of your script section
+        let selectedMessages = new Set();
+        let isSelectMode = false;
+        let currentMessages = [];
+
+        // Update the openChat function to include delete controls
+        async function openChat(partnerId, partnerName) {
+            // Clear previous chat state
+            selectedMessages.clear();
+            isSelectMode = false;
+            
+            currentChatPartner = { id: partnerId, name: partnerName };
+            const chatId = [localStorage.getItem('userId'), partnerId].sort().join('-');
+            socket.emit('joinChat', chatId);
+        
+            document.getElementById('chatHeader').innerHTML = `
+                <div class="flex justify-between items-center w-full">
+                    <h2 class="text-xl font-semibold">${partnerName}</h2>
+                    <div class="flex gap-2">
+                        <button onclick="toggleSelectMode()" class="p-2 hover:bg-gray-100 rounded-full">
+                            <i class="fas fa-check-square"></i>
+                        </button>
+                        <button id="deleteButton" onclick="deleteSelectedMessages()" 
+                            class="hidden p-2 text-red-500 hover:bg-red-50 rounded-full">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            try {
+                const userId = localStorage.getItem('userId');
+                const response = await fetch(`/api/messages?user1=${userId}&user2=${partnerId}`);
+                const messages = await response.json();
+                currentMessages = messages;
+                
+                socket.emit('markSeen', {
+                    fromUserId: partnerId,
+                    toUserId: userId
+                });
+                
+                displayMessages(messages);
+                loadRecentChats();
+                
+                // Clear and focus message input
+                const messageInput = document.getElementById('messageInput');
+                messageInput.value = '';
+                messageInput.focus();
+            } catch (error) {
+                console.error('Error loading messages:', error);
+            }
+        }
+
+        // Add these new functions for message selection and deletion
+        function toggleSelectMode() {
+            isSelectMode = !isSelectMode;
+            selectedMessages.clear();
+            const deleteButton = document.getElementById('deleteButton');
+            deleteButton.style.display = isSelectMode ? 'block' : 'none';
+            displayMessages(currentMessages);
+        }
+
+        // Add this function after the socket listeners
+        async function handleFileUpload(event) {
+            const files = event.target.files;
+            if (!files.length) return;
+
+            const formData = new FormData();
+            for (let file of files) {
+                formData.append('files', file);
+            }
+
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed');
+                }
+
+                const uploadedFiles = await response.json();
+                
+                for (let file of uploadedFiles) {
+                    const message = {
+                        from: localStorage.getItem('userId'),
+                        to: currentChatPartner.id,
+                        content: file.path,
+                        type: 'media',
+                        filename: file.filename,
+                        timestamp: new Date().toISOString()
+                    };
+                    socket.emit('sendMessage', message);
+                }
+
+                // Clear the file input
+                event.target.value = '';
+            } catch (error) {
+                console.error('Error uploading files:', error);
+                alert('Failed to upload file. Please try again.');
+            }
+        }
+
+        // Update the displayMessages function's media content section
+        function displayMessages(messages) {
+            const userId = localStorage.getItem('userId');
+            const messagesList = document.getElementById('messagesList');
+            
+            messagesList.innerHTML = messages.map(msg => {
+                const isOwnMessage = msg.from === userId;
+                const isSelected = selectedMessages.has(msg.id);
+                let statusIcon = '';
+                
+                if (isOwnMessage) {
+                    if (msg.seen) {
+                        statusIcon = '<i class="fas fa-check-double text-blue-400"></i>';
+                    } else if (msg.delivered) {
+                        statusIcon = '<i class="fas fa-check-double text-gray-400"></i>';
+                    } else {
+                        statusIcon = '<i class="fas fa-check text-gray-400"></i>';
+                    }
+                }
+
+                const messageStatus = isOwnMessage ? 
+                    `<span class="text-xs ml-2">${statusIcon}</span>` : '';
+
+                let messageContent = '';
+                if (msg.type === 'media') {
+                    const fileExt = msg.filename.split('.').pop().toLowerCase();
+                    const isImage = /^(jpg|jpeg|png|gif)$/i.test(fileExt);
+                    const isVideo = /^(mp4|webm|ogg|mov|avi)$/i.test(fileExt);
+                    
+                    if (isImage) {
+                        messageContent = `<img src="${msg.content}" alt="Shared image" class="max-w-full rounded mb-2 cursor-pointer" onclick="window.open(this.src)">`;
+                    } else if (isVideo) {
+                        messageContent = `
+                            <video controls class="max-w-full rounded mb-2">
+                                <source src="${msg.content}" type="video/${fileExt}">
+                                Your browser does not support the video tag.
+                            </video>`;
+                    } else {
+                        messageContent = `
+                            <div class="flex items-center p-2 bg-gray-50 rounded">
+                                <i class="fas fa-file-alt text-gray-500 mr-2"></i>
+                                <a href="${msg.content}" target="_blank" class="text-blue-500 hover:underline break-all">${msg.filename}</a>
+                            </div>`;
+                    }
+                } else {
+                    messageContent = `<p>${msg.content}</p>`;
+                }
+
+                return `
+                    <div class="message-wrapper mb-4 ${isSelectMode ? 'cursor-pointer' : ''}"
+                        onclick="${isSelectMode ? `toggleMessageSelection('${msg.id}')` : ''}"
+                        id="msg-${msg.id}">
+                        <div class="flex ${isOwnMessage ? 'justify-end' : 'justify-start'}">
+                            <div class="message-bubble ${isOwnMessage ? 'sent' : 'received'} 
+                                ${isSelected ? 'ring-2 ring-blue-500' : ''}">
+                                ${isSelectMode ? `
+                                    <div class="absolute -left-8 top-1/2 -translate-y-1/2">
+                                        <i class="fas ${isSelected ? 'fa-check-circle text-blue-500' : 'fa-circle text-gray-400'} text-lg"></i>
+                                    </div>
+                                ` : ''}
+                                ${messageContent}
+                                <div class="flex items-center justify-end mt-1">
+                                    <span class="text-xs text-gray-400">
+                                        ${new Date(msg.timestamp).toLocaleTimeString()}
+                                    </span>
+                                    ${messageStatus}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            messagesList.scrollTop = messagesList.scrollHeight;
+        }
+
+        // Update the toggleMessageSelection function
+        function toggleMessageSelection(messageId) {
+            if (!isSelectMode) return;
+            
+            if (selectedMessages.has(messageId)) {
+                selectedMessages.delete(messageId);
+            } else {
+                selectedMessages.add(messageId);
+            }
+            
+            const msgElement = document.getElementById(`msg-${messageId}`);
+            if (msgElement) {
+                msgElement.querySelector('.max-w-[70%]').classList.toggle('selected-message');
+                msgElement.querySelector('.fa-circle')?.classList.toggle('fa-check-circle');
+                msgElement.querySelector('.fa-circle')?.classList.toggle('text-blue-500');
+                msgElement.querySelector('.fa-circle')?.classList.toggle('text-gray-400');
+            }
+            
+            // Show/hide delete button based on selection
+            const deleteButton = document.getElementById('deleteButton');
+            if (deleteButton) {
+                deleteButton.style.display = selectedMessages.size > 0 ? 'block' : 'none';
+            }
+        }
+
+        // Add these socket listeners
+        socket.on('userOnline', (userId) => {
+            if (currentChatPartner && currentChatPartner.id === userId) {
+                // Refresh messages to update delivery status
+                openChat(currentChatPartner.id, currentChatPartner.name);
+            }
+        });
+
+        socket.on('messageDelivered', (messageId) => {
+            if (currentChatPartner) {
+                // Refresh messages to update delivery status
+                openChat(currentChatPartner.id, currentChatPartner.name);
+            }
+        });
+
+        // Add socket listener for seen status updates
+        socket.on('messagesSeen', ({ fromUserId, toUserId }) => {
+            if (currentChatPartner && 
+                (currentChatPartner.id === fromUserId || currentChatPartner.id === toUserId)) {
+                const userId = localStorage.getItem('userId');
+                fetch(`/api/messages?user1=${userId}&user2=${currentChatPartner.id}`)
+                    .then(response => response.json())
+                    .then(messages => displayMessages(messages))
+                    .catch(error => console.error('Error updating seen status:', error));
+            }
+        });
+        async function sendMessage() {
+            if (!currentChatPartner) return;
+            
+            const messageInput = document.getElementById('messageInput');
+            const content = messageInput.value.trim();
+            
+            if (!content) return;
+            
+            const message = {
+                from: localStorage.getItem('userId'),
+                to: currentChatPartner.id,
+                content: content,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                socket.emit('sendMessage', message);
+                messageInput.value = '';
+                
+                // Get current messages and append new message
+                const userId = localStorage.getItem('userId');
+                const response = await fetch(`/api/messages?user1=${userId}&user2=${currentChatPartner.id}`);
+                const messages = await response.json();
+                displayMessages(messages);
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
+        }
+
+        // Add this socket listener for new messages when chat is not open
+        socket.on('newMessage', async (message) => {
+            const userId = localStorage.getItem('userId');
+            
+            // If the message is not from the current chat, show notification
+            if (!currentChatPartner || message.from !== currentChatPartner.id) {
+                // Play notification sound (optional)
+                const audio = new Audio('/notification.mp3');
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            }
+            
+            // Update messages if in current chat
+            if (currentChatPartner && 
+                (message.from === currentChatPartner.id || message.to === currentChatPartner.id)) {
+                const response = await fetch(`/api/messages?user1=${userId}&user2=${currentChatPartner.id}`);
+                const messages = await response.json();
+                displayMessages(messages);
+            }
+            
+            // Always refresh recent chats to update unread counts
+            loadRecentChats();
+        });
+
+        document.getElementById('searchInput').addEventListener('input', debounce(searchUsers, 300));
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function logout() {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('username');
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>
