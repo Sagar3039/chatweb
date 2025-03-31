@@ -17,8 +17,9 @@ app.use(express.static('public'));
 app.use(express.static('views'));
 
 // Root route
+// Update root route to point to root directory
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Configure file uploads
